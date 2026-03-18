@@ -10,13 +10,26 @@ Feature: Flujo booking
     * def tokenAuth = response.token
 
     * def id = 1
-    #* def token = d4a9105b4029296
     Given url 'https://restful-booker.herokuapp.com'
     And path 'booking/'+id
     And header Content-Type = 'application/json'
-    #And header Cookie = 'token=b16c4be68b1786d'
-    And header Authorization = 'Basic ' + tokenAuth
-    And request {"firstname": "Jim","lastname": "Smith","totalprice": 111,"depositpaid": true,"bookingdates": {"checkin": "2024-01-01","checkout": "2024-01-10"},"additionalneeds": "Lunch"}
+    And header Cookie = 'token=' + tokenAuth
+#    And request {"firstname": "Jim","lastname": "Smith","totalprice": 111,"depositpaid": true,"bookingdates": {"checkin": "2024-01-01","checkout": "2024-01-10"},"additionalneeds": "Lunch"}
+    
+    And request
+            """
+            {
+                "firstname": "Jim",
+                "lastname": "Smith",
+                "totalprice": 111,
+                "depositpaid": true,
+                "bookingdates": {
+                "checkin": "2024-01-01",
+                "checkout": "2024-01-10"
+                },
+                "additionalneeds": "Lunch"
+            }
+            """
     When method put
     Then status 200
     And match response.firstname == 'Jim'

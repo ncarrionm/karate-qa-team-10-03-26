@@ -104,5 +104,15 @@ Feature: Flujo Auth
     And match response.lastname == 'Smith'
 
 
+  @token-parameter
+  Scenario: CP09 - Login exitoso
+    Given url 'https://restful-booker.herokuapp.com'
+    And path 'auth'
+    And header Content-Type = 'application/json'
+    And request {"username": "admin","password": "password123"}
+    When method post
+    Then status 200
+    * def token = response.token
+    * print 'Token obtenido: ', token
 
 
